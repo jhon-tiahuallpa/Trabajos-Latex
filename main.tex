@@ -1,0 +1,424 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{ amsmath, amsthm, amssymb }
+\usepackage{authblk}
+\usepackage[margin=1in]{geometry} 
+\usepackage{tcolorbox}
+\usepackage{color}
+\usepackage{titling}%%%%% Remover la fecha
+\predate{}%%%%%% Remover la fecha
+\postdate{}%%%%%% Remover la fecha
+
+
+
+
+\usepackage{xcolor}
+\newcommand{\abs}[1]{\lvert#1\rvert}            %valor absoluto pequeño
+\newcommand{\Abs}[1]{\left\lvert#1\right\rvert}     %valor absoluto para fracciones
+
+% \highlight[ <color> ]{ <ecuacion> }     
+\newcommand{\highlight}[2][yellow]{\mathchoice%
+  {\colorbox{#1}{$\displaystyle#2$}}%
+  {\colorbox{#1}{$\textstyle#2$}}%
+  {\colorbox{#1}{$\scriptstyle#2$}}%
+  {\colorbox{#1}{$\scriptscriptstyle#2$}}}%
+
+
+
+\usepackage{vmargin} % Redefinir el tamaño de la hoja
+\setpapersize{A4}
+\setmargins{1.5cm}      % margen izquierdo
+{0cm}                   % margen superior
+{18cm}                  % anchura del texto
+{27cm}                  % altura del texto
+{1pt}                   % altura de los encabezados
+{1cm}                   % espacio entre el texto y los encabezados
+{0pt}                   % altura del pie de página
+{0.5cm}                 % espacio entre el texto y el pie de página
+
+
+
+
+
+
+
+\title{\textbf{Determinante e Inversa de una Matriz Particionada}}
+\author{Yhon Paúl Tiahuallpa Yucra}
+\date{}% remover la fecha
+
+
+
+
+
+\begin{document}
+
+\maketitle
+\begin{center}
+\itshape Asignatura: Modelos Lineales\\
+Escuela Profesional de Ingeniería Estadística\\
+Facultad de Ingeniería Económica, Estadística y Ciencias Sociales\\
+Universidad Nacional de Ingeniería
+\end{center}
+
+
+
+
+
+
+\section*{Determinante de una Matriz Particionada}
+
+Para poder hallar la determinante de una matriz particionada podemos usar el siguiente teorema:
+
+\begin{center}\label{propiedad}
+\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=15 cm]
+\sffamily Sea $A$ una matriz real de tamaño $n \times n$ particionada como 
+\begin{equation*}
+    A = \begin{pmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{pmatrix}
+\end{equation*}
+Si $A_{11}$ y $A_{22}$ son submatrices cuadradas de tamaño $k \times k$ y $(n - k) \times (n - k)$ respectivamente; y $A_{12} = 0$ ó $A_{21} = 0$, entonces
+$$det(A) = det(A_{11})det(A_{22})$$
+\end{tcolorbox}
+\end{center}
+
+
+
+Sea:
+\begin{equation*}
+    A = \begin{pmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{pmatrix}
+\end{equation*}
+
+
+\begin{itemize}
+    \item Realizamos transformaciones lineales a las filas de la determinante de $A$,  $\color{red} f_2 \color{black} - (A_{21} A_{11}^{-1}). \color{red} f_1 \color{black}$, para lo cual $ A_{11}^{-1}$ deberia existir, por lo que quedaría como condición:
+
+    \begin{equation*}
+        \left | A \right | = \begin{matrix} \color{red} f_1 \\ \color{red} f_2 \end{matrix} \begin{vmatrix}     A_{11} & A_{12}\\ A_{21} & A_{22} \end{vmatrix} \xrightarrow{ \color{red} f_2 \color{black} - (A_{21} A_{11}^{-1}). \color{red} f_1 \color{black}} \begin{vmatrix} A_{11} & A_{12}\\ \textbf{0} & A_{22} - A_{21} A_{11}^{-1} A_{12} \end{vmatrix}
+    \end{equation*}
+
+    Al quedarnos una \textbf{matriz triangular superior por bloques}, hallar su determinante resulta más sencillo
+
+    \begin{equation*}
+        \left | A \right | = \left | A_{11} .(A_{22} - A_{21} A_{11}^{-1} A_{12}) \right | 
+    \end{equation*}
+    
+    Vemos que podemos aplicar la propiedad antes mencionada ya que $A_{21}^{*} = \textbf{0}$, por lo que la determinante quedaría asi:
+
+    \begin{equation*}
+        \highlight[yellow!50!white]{\left | A \right | = \left | A_{11} \right | \left | (A_{22} - A_{21} A_{11}^{-1} A_{12}) \right |}
+    \end{equation*}
+    
+    \begin{center}
+    \begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=10 cm]
+        \center \large $\left | A \right | = \left | A_{11} \right | \left | (A_{22} - A_{21} A_{11}^{-1} A_{12}) \right |$
+    \end{tcolorbox}
+    \end{center}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \item De igual manera realizamos transformaciones lineales a las filas de la determinante de $A$,  $\color{red} f_1 \color{black} - (A_{12} A_{22}^{-1}). \color{red} f_2 \color{black}$, para lo cual $ A_{22}^{-1}$ deberia existir, por lo que quedaría como condición:
+
+    \begin{equation*}
+        \left | A \right | = \begin{matrix} \color{red} f_1 \\ \color{red} f_2 \end{matrix} \begin{vmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{vmatrix} \xrightarrow{ \color{red} f_1 \color{black} - (A_{12} A_{22}^{-1}). \color{red} f_2 \color{black}} \begin{vmatrix} A_{11} - A_{12} A_{22}^{-1} A_{21} & \textbf{0} \\ A_{21} & A_{22} \end{vmatrix}
+    \end{equation*}
+
+    Al quedarnos una \textbf{matriz triangular inferior por bloques}, hallar su determinante resulta más sencillo
+
+    \begin{equation*}
+        \left | A \right | = \left | (A_{11} - A_{12} A_{22}^{-1} A_{21}). A_{22} \right | 
+    \end{equation*}
+
+    Vemos que podemos aplicar la propiedad antes mencionada ya que $A_{12}^{*} = \textbf{0}$, por lo que la determinante quedaría asi:
+
+    \begin{equation*}
+        \highlight[yellow!50!white]{\left | A \right | = \left | A_{22} \right | \left | (A_{11} - A_{12} A_{22}^{-1} A_{21}) \right |}
+    \end{equation*}
+    
+    \begin{center}
+    \begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=10 cm]
+        \center \large $\left | A \right | = \left | A_{22} \right | \left | (A_{11} - A_{12} A_{22}^{-1} A_{21}) \right |$
+    \end{tcolorbox}
+    \end{center}
+
+\end{itemize}
+
+
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=17 cm]
+\large \sffamily Si $A_{11}$ y $A_{22}$ son inversibles, entonces
+\begin{align*}
+    \left | A \right | = \left | A_{11} \right | \left | (A_{22} - A_{21} A_{11}^{-1} A_{12}) \right |= \left | A_{22} \right | \left | (A_{11} - A_{12} A_{22}^{-1} A_{21}) \right |
+\end{align*}
+\end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\section*{Inversa de una Matriz Particionada}
+
+Recordemos la definición de las matrices inversas:
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=12 cm]
+ \sffamily  Sea $A_{n \times n}$ una matriz cuadrada. Se dice que $A^{-1}$ es la inversa de $A$ si y solo si
+    $$AA^{-1} = A^{-1} A = \mathbb{I}$$
+\end{tcolorbox}
+\end{center}
+
+que $A$ posee una inversa conocida $A^{-1}$ si y solo si
+
+
+Sea:
+
+\begin{equation*}
+    A = \begin{pmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{pmatrix} ; \qquad A = \begin{pmatrix} A^{11} & A^{12}\\ A^{21} & A^{22} \end{pmatrix} 
+\end{equation*}
+
+Podemos definir $A^{11}$, $A^{12}$, $A^{21}$ y $A^{22}$ en función de $A_{11}$, $A_{12}$, $A_{21}$ y $A_{22}$.
+
+\subsection*{Considerando $AA^{-1} = \mathbb{I}$}
+
+\begin{equation*}
+    \begin{pmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{pmatrix}\begin{pmatrix} A^{11} & A^{12}\\ A^{21} & A^{22} \end{pmatrix} = \begin{pmatrix} \mathbb{I} & \textbf{0} \\ \textbf{0} & \mathbb{I} \end{pmatrix}
+\end{equation*}
+
+ De aquí podemos obtener las siguientes relaciones:
+
+\begin{align}
+    A_{11}A^{11} + A_{12}A^{21} &= \mathbb{I} \label{ecuacion1.1} \\ 
+    A_{11}A^{12} + A_{12}A^{22} &= \textbf{0} \label{ecuacion1.2} \\ 
+    A_{21}A^{11} + A_{22}A^{21} &= \textbf{0} \label{ecuacion1.3} \\ 
+    A_{21}A^{12} + A_{22}A^{22} &= \mathbb{I} \label{ecuacion1.4}
+\end{align}
+
+De \eqref{ecuacion1.3}
+
+\begin{align*}
+    A_{21}A^{11} + A_{22}A^{21} = \textbf{0} \\
+    A_{22}A^{21} = -A_{21}A^{11}
+\end{align*}
+
+Multiplicando \color{red} $A_{22}^{-1}$ \color{black} por la izquierda
+
+\begin{align*}
+    \underbrace{\color{red} A_{22}^{-1} \color{black}A_{22}}_{\mathbb{I}}A^{21} = -\color{red} A_{22}^{-1} \color{black}A_{21}A^{11}
+\end{align*}
+\begin{align} \label{ecuacion1.5}
+    A^{21} = -A_{22}^{-1}A_{21}A^{11}
+\end{align}
+
+Reemplazando \color{red} $A^{21}$ \color{black} en \eqref{ecuacion1.1}
+
+\begin{align*}
+    A_{11}A^{11} + A_{12} \color{red}(-A_{22}^{-1}A_{21}A^{11})\color{black} = \mathbb{I} \\
+    (A_{11} - A_{12}A_{22}^{-1}A_{21})A^{11} = \mathbb{I}
+\end{align*}
+
+De donde queda 
+
+\begin{equation}\label{ecuacion1.6}
+    \highlight[yellow!50!white]{ A^{11} = (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} }
+\end{equation}
+
+Si reemplazamos \color{red} $A^{11}$ \color{black} en \eqref{ecuacion1.5}
+
+\begin{align*} 
+    \highlight[yellow!50!white]{ A^{21} = -A_{22}^{-1}A_{21} \color{red} (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1}}
+\end{align*}
+
+De \eqref{ecuacion1.2} 
+
+\begin{align*}
+    A_{11}A^{12} + A_{12}A^{22} = \textbf{0} \\
+    A_{11}A^{12} = -A_{12}A^{22}
+\end{align*}
+
+Multiplicando \color{red} $A_{11}^{-1}$ \color{black} por la izquierda
+
+\begin{align*}
+    \underbrace{\color{red} A_{11}^{-1} \color{black} A_{11}}_{\mathbb{I}}A^{12} = -\color{red} A_{11}^{-1} \color{black}A_{12}A^{22}
+\end{align*}
+\begin{align} \label{ecuacion1.7}
+    A^{12} = -A_{11}^{-1}A_{12}A^{22}
+\end{align}
+
+Reemplazando \color{red} $A^{12}$ \color{black} en \eqref{ecuacion1.4}
+
+\begin{align*}
+    A_{21}\color{red}(-A_{11}^{-1}A_{12}A^{22})\color{black} + A_{22}A^{22} = \mathbb{I}\\
+    (-A_{21}A_{11}^{-1}A_{12} + A_{22})A^{22} = \mathbb{I}
+\end{align*}
+
+De donde obtenemos 
+
+\begin{equation}\label{ecuacion1.8}
+    \highlight[yellow!50!white]{ A^{22} = (A_{22} - A_{21}A_{11}^{-1}A_{12} )^{-1}}
+\end{equation}
+
+Si reemplazamos \color{red} $A^{22}$ \color{black} en \eqref{ecuacion1.7}
+
+\begin{align*} 
+    \highlight[yellow!50!white]{ A^{12} = -A_{11}^{-1}A_{12}\color{red} (A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1}}
+\end{align*}
+
+
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=11 cm]
+\large \sffamily Si $AA^{-1} = \mathbb{I}$
+\begin{align*}
+    A^{11} &= (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} \\
+    A^{21} &= -A_{22}^{-1}A_{21} (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1}\\
+    A^{22} &= (A_{22} - A_{21}A_{11}^{-1}A_{12} )^{-1}\\
+    A^{12} &= -A_{11}^{-1}A_{12}(A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1}
+\end{align*}
+\end{tcolorbox}
+\end{center}
+
+
+%\begin{align*}
+%x+y-z & = 1\\
+%x-y+z & = 1\\
+%\intertext{y por hipótesis}
+%x+y+z & =1
+%\end{align*}
+
+
+\newpage
+\subsection*{Considerando $A^{-1} A = \mathbb{I}$}
+
+
+\begin{equation*}
+    \begin{pmatrix} A^{11} & A^{12}\\ A^{21} & A^{22} \end{pmatrix}\begin{pmatrix} A_{11} & A_{12}\\ A_{21} & A_{22} \end{pmatrix} = \begin{pmatrix} \mathbb{I} & \textbf{0} \\ \textbf{0} & \mathbb{I} \end{pmatrix}
+\end{equation*}
+
+ De aquí podemos obtener las siguientes relaciones:
+
+\begin{align}
+    A^{11}A_{11} + A^{12}A_{21} &= \mathbb{I} \label{ecuacion2.1} \\ 
+    A^{11}A_{12} + A^{12}A_{22} &= \textbf{0} \label{ecuacion2.2} \\ 
+    A^{21}A_{11} + A^{22}A_{21} &= \textbf{0} \label{ecuacion2.3} \\ 
+    A^{21}A_{12} + A^{22}A_{22} &= \mathbb{I} \label{ecuacion2.4}
+\end{align}
+
+De \eqref{ecuacion2.2}
+
+\begin{align*}
+    A^{11}A_{12} + A^{12}A_{22} = \textbf{0} \\
+    A^{12}A_{22} = -A^{11}A_{12}
+\end{align*}
+
+Multiplicando \color{red} $A_{22}^{-1}$ \color{black} por la derecha
+
+\begin{align*}
+    A^{12}\underbrace{A_{22}\color{red} A_{22}^{-1} \color{black}}_{\mathbb{I}} = -A^{11}A_{12} \color{red} A_{22}^{-1} \color{black}
+\end{align*}
+\begin{align} \label{ecuacion2.5}
+    A^{12} = -A^{11}A_{12} A_{22}^{-1}
+\end{align}
+
+Reemplazando \color{red} $A^{12}$ \color{black} en \eqref{ecuacion2.1}
+
+\begin{align*}
+    A^{11}A_{11} + \color{red}(-A^{11}A_{12} A_{22}^{-1})\color{black} A_{21} = \mathbb{I} \\
+    A^{11}(A_{11} - A_{12}A_{22}A_{21}^{-1}) = \mathbb{I}
+\end{align*}
+
+De donde queda 
+
+\begin{equation}\label{ecuacion2.6}
+    \highlight[yellow!50!white]{ A^{11} = (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} }
+\end{equation}
+
+Si reemplazamos \color{red} $A^{11}$ \color{black} en \eqref{ecuacion2.5}
+
+\begin{align*} 
+    \highlight[yellow!50!white]{ A^{12} = -\color{red} (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} \color{black}A_{12} A_{22}^{-1}}
+\end{align*}
+
+De \eqref{ecuacion2.2} 
+
+\begin{align*}
+    A^{21} A_{11} + A^{22} A_{21} = \textbf{0} \\
+    A^{21} A_{11} = - A^{22} A_{21}
+\end{align*}
+
+Multiplicando \color{red} $A_{11}^{-1}$ \color{black} por la derecha
+
+\begin{align*}
+    A^{21} \underbrace{ A_{11} \color{red} A_{11}^{-1} \color{black}}_{\mathbb{I}} = - A^{22} A_{21} \color{red} A_{11}^{-1} \color{black}
+\end{align*}
+\begin{align} \label{ecuacion2.7}
+    A^{21} = - A^{22} A_{21} A_{11}^{-1}
+\end{align}
+
+Reemplazando \color{red} $A^{21}$ \color{black} en \eqref{ecuacion2.4}
+
+\begin{align*}
+    \color{red} (- A^{22} A_{21} A_{11}^{-1}) \color{black} A_{12} +  A^{22} A_{22} = \mathbb{I}\\
+    A^{22} (- A_{21} A_{11}^{-1} A_{12} + A_{22}) = \mathbb{I}
+\end{align*}
+
+De donde obtenemos 
+
+\begin{equation}\label{ecuacion2.8}
+    \highlight[yellow!50!white]{ A^{22} = (A_{22} - A_{21} A_{11}^{-1} A_{12})^{-1} }
+\end{equation}
+
+Si reemplazamos \color{red} $A^{22}$ \color{black} en \eqref{ecuacion2.7}
+
+\begin{align*} 
+    \highlight[yellow!50!white]{ A^{21} = -\color{red} (A_{22} - A_{21} A_{11}^{-1} A_{12} )^{-1} \color{black}  A_{21} A_{11}^{-1} }
+\end{align*}
+
+
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=11 cm]
+\large \sffamily Si $AA^{-1} = \mathbb{I}$
+\begin{align*}
+    A^{11} &= (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} \\
+    A^{12} &= -(A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} A_{12} A_{22}^{-1}\\
+    A^{22} &= (A_{22} - A_{21} A_{11}^{-1} A_{12})^{-1} \\
+    A^{21} &= - (A_{22} - A_{21} A_{11}^{-1} A_{12})^{-1} A_{21} A_{11}^{-1} 
+\end{align*}
+\end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!10!white ,colframe=white,width=17 cm]
+\large \sffamily Donde:
+\begin{align*}
+    A^{21} &= -A_{22}^{-1}A_{21} (A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} = - (A_{22} - A_{21} A_{11}^{-1} A_{12})^{-1} A_{21} A_{11}^{-1} \\
+    A^{12} &= -A_{11}^{-1}A_{12}(A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1} = -(A_{11} - A_{12}A_{22}^{-1}A_{21})^{-1} A_{12} A_{22}^{-1}
+\end{align*}
+\end{tcolorbox}
+\end{center}
+
+
+
+
+
+\end{document}
